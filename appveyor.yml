@@ -16,3 +16,8 @@ test_script:
 artifacts:
   - path: Sharpmake.Application\bin\release\*
     name: Sharpmake
+
+deploy:
+- provider: GitHub
+  auth_token:
+    secure: 1vWe/XVH31N4HDjazKrGdEFBzVJu6Z7YyEZIBv+p3YNOKkywICcj/6G/D1CzWC6I
