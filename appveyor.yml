@@ -16,6 +16,7 @@ test_script:
 artifacts:
   - path: Sharpmake.Application\bin\release\*
     name: Sharpmake
+    type: zip
 
 deploy:
 - provider: GitHub
