@@ -3,19 +3,26 @@
 image: Visual Studio 2015
 
 platform:
-- Any CPU
+ - Any CPU
 
 configuration:
-- Debug
-- Release
+ - Debug
+ - Release
 
 before_build:
-- cmd: dotnet restore
+ - cmd: dotnet restore
 
 build:
   project: Sharpmake.sln
   verbosity: minimal
 
-after_test:
-- cmd: python regression_test.py
+after_build:
+  - cmd: 7z a Sharpmake.zip %APPVEYOR_BUILD_FOLDER%\Sharpmake.Application\bin\$(configuration)\*
 
+after_test:
+ - cmd: python regression_test.py
+
+artifacts:
+  - path: Sharpmake.zip
+    name: Sharpmake
+    type: zip
