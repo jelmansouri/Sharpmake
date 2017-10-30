@@ -10,11 +10,14 @@ build_script:
   - cmd: echo "Building Release:" && "%VS140COMNTOOLS%\..\IDE\devenv.com" /Build "Debug" Sharpmake.sln
   - cmd: echo "Building Debug:" && "%VS140COMNTOOLS%\..\IDE\devenv.com" /Build "Release" Sharpmake.sln
 
+after_build:
+  - cmd: 7z a Sharpmake.zip %APPVEYOR_BUILD_FOLDER%\Sharpmake.Application\bin\release\*
+
 test_script:
   - cmd: nunit3-console Sharpmake.UnitTests\bin\debug\Sharpmake.UnitTests.dll --result=myresults.xml;format=AppVeyor
 
 artifacts:
-  - path: Sharpmake.Application\bin\release\*
+  - path: Sharpmake.zip
     name: Sharpmake
     type: zip
 
