@@ -17,12 +17,12 @@ build:
   verbosity: minimal
 
 after_build:
-  - cmd: 7z a Sharpmake.zip %APPVEYOR_BUILD_FOLDER%\Sharpmake.Application\bin\$(configuration)\*
+  - cmd: 7z a Sharpmake_%CONFIGURATION%.zip %APPVEYOR_BUILD_FOLDER%\Sharpmake.Application\bin\%CONFIGURATION%\*
 
 after_test:
  - cmd: python regression_test.py
 
 artifacts:
-  - path: Sharpmake.zip
+  - path: Sharpmake_Release.zip
     name: Sharpmake
     type: zip
