@@ -32,11 +32,8 @@ after_test:
  - cmd: python regression_test.py
 
 artifacts:
-  - path: Sharpmake_Release.zip
+  - path: Sharpmake_*.zip
     name: Sharpmake
-    type: zip
-  - path: Sharpmake_Debug.zip
-    name: Sharpmake_Debug
     type: zip
 
 deploy:
@@ -45,9 +42,10 @@ deploy:
   provider: GitHub
   auth_token:
     secure: 1vWe/XVH31N4HDjazKrGdEFBzVJu6Z7YyEZIBv+p3YNOKkywICcj/6G/D1CzWC6I
-  artifact: Sharpmake_Release
+  artifact: Sharpmake_Release.zip
   draft: false
   prerelease: false
-#  on:
+  on:
+    configuration: release
 #    branch: master
 #    appveyor_repo_tag: true
