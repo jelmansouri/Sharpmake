@@ -38,3 +38,16 @@ artifacts:
   - path: Sharpmake_Debug.zip
     name: Sharpmake_Debug
     type: zip
+
+deploy:
+  release: Sharpmake-v$(appveyor_build_version)
+  description: 'Prebuilt sharpmake for Windows'
+  provider: GitHub
+  auth_token:
+    secure: 1vWe/XVH31N4HDjazKrGdEFBzVJu6Z7YyEZIBv+p3YNOKkywICcj/6G/D1CzWC6I
+  artifact: Sharpmake_Release
+  draft: false
+  prerelease: false
+#  on:
+#    branch: master
+#    appveyor_repo_tag: true
