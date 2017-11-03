@@ -24,7 +24,7 @@ assembly_info:
   assembly_informational_version: '{version}'
 
 install:
-  -cmd: nuget install ILMerge -ExcludeVersion
+  - nuget install ILMerge -ExcludeVersion -OutputDirectory %APPVEYOR_BUILD_FOLDER%
 
 before_build:
  - cmd: dotnet restore
@@ -35,7 +35,7 @@ build:
 
 after_build:
   - cmd: python deploy_binaries.py -c %CONFIGURATION%
-  - cmd: ILMerge\tools\ilmerge.exe /out:Sharpmake.exe /ndebug /wildcards Binaries\Sharpmake.Application.exe Binaries\Sharpmake*.dll
+  - cmd: echo Running ILMerge && %APPVEYOR_BUILD_FOLDER%\ILMerge\tools\ilmerge.exe /out:Sharpmake.exe /ndebug /wildcards Binaries\Sharpmake.Application.exe Binaries\Sharpmake*.dll
 
 after_test:
  - cmd: python regression_test.py
