@@ -11,10 +11,10 @@ configuration:
  - Debug
  - Release
 
-#branches:
-#  only:
-#    - master
-#    - dev
+branches:
+  only:
+    - master
+    - dev
 
 assembly_info:
   patch: true
