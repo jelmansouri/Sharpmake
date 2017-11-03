@@ -11,10 +11,10 @@ configuration:
  - Debug
  - Release
 
-branches:
-  only:
-    - master
-    - dev
+#branches:
+#  only:
+#    - master
+#    - dev
 
 assembly_info:
   patch: true
@@ -22,6 +22,9 @@ assembly_info:
   assembly_version: '1.0.{build}'
   assembly_file_version: '{version}'
   assembly_informational_version: '{version}'
+
+install:
+  -cmd: nuget install ILMerge -ExcludeVersion
 
 before_build:
  - cmd: dotnet restore
@@ -31,16 +34,15 @@ build:
   verbosity: minimal
 
 after_build:
-  - cmd: python deploy_binaries.py -c %CONFIGURATION% -d
-  - cmd: 7z a Sharpmake_%CONFIGURATION%.zip %APPVEYOR_BUILD_FOLDER%\Binaries\*
+  - cmd: python deploy_binaries.py -c %CONFIGURATION%
+  - cmd: ILMerge\tools\ilmerge.exe /out:Sharpmake.exe /ndebug /wildcards Binaries\Sharpmake.Application.exe Binaries\Sharpmake*.dll
 
 after_test:
  - cmd: python regression_test.py
 
 artifacts:
-  - path: Sharpmake_*.zip
+  - path: Sharpmake.exe
     name: Sharpmake
-    type: zip
 
 deploy:
   release: Sharpmake-v$(appveyor_build_version)
@@ -48,7 +50,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: 1vWe/XVH31N4HDjazKrGdEFBzVJu6Z7YyEZIBv+p3YNOKkywICcj/6G/D1CzWC6I
-  artifact: Sharpmake_Release.zip
+  artifact: Sharpmake
   draft: false
   prerelease: false
   on:
